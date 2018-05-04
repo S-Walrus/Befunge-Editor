@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  background-color: #333A42;
+  padding: 10px;
+}
+
+input.cell {
+  width: 18px;
+  height: 24px;
+  caret-color: white;
+  border-style: none;
+  background-color: #485058;
+  text-align: center;
+  color: #F1ECE9;
+}
+
+input.cell:focus {
+  border-style: none;
+  background-color: #D7443F;
+  caret-color: #D7443F;
+}
+
+.container {
+  display: inline-grid;
+  grid-template: subgrid;
+  grid-gap: 4px;
+  justify-items: center;
+  align-items: center;
+}
