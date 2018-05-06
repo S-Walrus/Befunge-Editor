@@ -12,6 +12,7 @@ input.cell {
   background-color: #485058;
   text-align: center;
   color: #F1ECE9;
+  box-shadow: inset inherit inherit 0 0 white;
 }
 
 input.cell:focus {
