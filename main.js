@@ -1,8 +1,11 @@
 // Number of quarters from top clockwise
-var direction = 0
-var pointer_x = 0
-var pointer_y = 0
-var len = 9
+var direction = 0;
+var pointer_x = 0;
+var pointer_y = 0;
+var len = 9;
+const interval = 200;
+var timerId;
+var isRunning = false;
 
 var grid = new Array(len);
 var map = new Array(len);
@@ -35,31 +38,59 @@ function move(val) {
 
 	switch (direction) {
 		case 0:
-			grid[pointer_x][pointer_y-1].focus();
-			pointer_y--;
+			if (pointer_y != 0) {
+				pointer_y--;
+			} else {
+				pointer_y = len - 1;
+			}
 			break;
 		case 1:
-			grid[pointer_x+1][pointer_y].focus();
-			pointer_x++;
+			if (pointer_x != len - 1) {
+				pointer_x++;
+			} else {
+				pointer_x = 0;
+			}
 			break;
 		case 2:
-			grid[pointer_x][pointer_y+1].focus();
-			pointer_y++;
+			if (pointer_y != len - 1) {
+				pointer_y++;
+			} else {
+				pointer_y = 0;
+			}
 			break;
 		case 3:
-			grid[pointer_x-1][pointer_y].focus();
-			pointer_x--;
+			if (pointer_x != 0) {
+				pointer_x--;
+			} else {
+				pointer_x = len - 1;
+			}
+			break;
+	}
+	grid[pointer_x][pointer_y].focus();
+}
+
+
+function stop() {
+	clearInterval(timerId);
+	isRinning = false;
+}
+
+
+function runNext() {
+	switch (map[pointer_x][pointer_y]) {
+		case '@':
+			stop();
+			break;
+		default:
+			move(map[pointer_x][pointer_y]);
 			break;
 	}
 }
 
 
 function run() {
-	while (map[x][y] != '@') {
-		switch (map[x][y]) {
-				TODO
-		}
-	}
+	isRunning = true;
+	timerId = setInterval(function() { runNext() }, interval);
 }
 
 
@@ -125,7 +156,11 @@ $(document).ready(function() {
 						break;
 					
 					case 82:
-						run();
+						if (isRunning) {
+							stop();
+						} else {
+							run();
+						}
 						break;
 						
 					default:
