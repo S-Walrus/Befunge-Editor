@@ -2,16 +2,17 @@
 var direction = 0;
 var pointer_x = 0;
 var pointer_y = 0;
-var len = 9;
+const len_x = 40;
+const len_y = 20;
 const interval = 200;
 var timerId;
 var isRunning = false;
 
-var grid = new Array(len);
-var map = new Array(len);
-for (i = 0; i < len; i++) {
-	grid[i] = new Array(len);
-	map[i] = new Array(len);
+var grid = new Array(len_x);
+var map = new Array(len_x);
+for (i = 0; i < len_x; i++) {
+	grid[i] = new Array(len_y);
+	map[i] = new Array(len_y);
 }
 
 
@@ -41,18 +42,18 @@ function move(val) {
 			if (pointer_y != 0) {
 				pointer_y--;
 			} else {
-				pointer_y = len - 1;
+				pointer_y = len_y - 1;
 			}
 			break;
 		case 1:
-			if (pointer_x != len - 1) {
+			if (pointer_x != len_x - 1) {
 				pointer_x++;
 			} else {
 				pointer_x = 0;
 			}
 			break;
 		case 2:
-			if (pointer_y != len - 1) {
+			if (pointer_y != len_y - 1) {
 				pointer_y++;
 			} else {
 				pointer_y = 0;
@@ -62,7 +63,7 @@ function move(val) {
 			if (pointer_x != 0) {
 				pointer_x--;
 			} else {
-				pointer_x = len - 1;
+				pointer_x = len_x - 1;
 			}
 			break;
 	}
@@ -95,8 +96,8 @@ function run() {
 
 
 $(document).ready(function() {
-	for (x = 1; x < len+1; x++)
-		for (y = 1; y < len+1; y++) {
+	for (x = 1; x < len_x + 1; x++)
+		for (y = 1; y < len_y + 1; y++) {
 			$("#bef-box").append('<input class="cell"' +
 														'id="' + (x-1) + '-' + (y-1) +
 														'" type="text" style="' +
@@ -135,27 +136,19 @@ $(document).ready(function() {
 				prevent = true;
 				switch (event.which) {
 					case 38:
-					case 87:
-					case 75:
 						changeDirection(0);
 						break;
 					case 39:
-					case 68:
-					case 76:
 						changeDirection(1);
 						break;
 					case 40:
-					case 83:
-					case 74:
 						changeDirection(2);
 						break;
 					case 37:
-					case 65:
-					case 72:
 						changeDirection(3);
 						break;
 					
-					case 82:
+					case 13:
 						if (isRunning) {
 							stop();
 						} else {
