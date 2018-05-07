@@ -1,18 +1,25 @@
+const len_x = 40;
+const len_y = 20;
+const interval = 100;
+const null_char = '';
 // Number of quarters from top clockwise
 var direction = 0;
 var pointer_x = 0;
 var pointer_y = 0;
-const len_x = 40;
-const len_y = 20;
-const interval = 200;
 var timerId;
 var isRunning = false;
+var stack = [];
 
-var grid = new Array(len_x);
-var map = new Array(len_x);
+var grid = new Array(len_x);		// An array of elements contained in the grid
+var map = new Array(len_x);			// An array of value of elements, also the Befunge code
+// Initialize arrays
 for (i = 0; i < len_x; i++) {
 	grid[i] = new Array(len_y);
 	map[i] = new Array(len_y);
+	// Fill 'map' with null characters
+	for (j = 0; j < len_y; j++) {
+		map[j] = null_char;
+	}
 }
 
 
@@ -126,7 +133,11 @@ $(document).ready(function() {
 				$(this).val($(this).val().slice(-1));
 
 				val = $(this).val();
-				map[pointer_x][pointer_y] = val;
+				if (val == '') {
+					map[pointer_x][pointer_y] = null_char;
+				} else {
+					map[pointer_x][pointer_y] = val;
+				}
 
 				move(val);
 			});
@@ -154,6 +165,14 @@ $(document).ready(function() {
 						} else {
 							run();
 						}
+						break;
+						
+					case 8:
+						direction = (direction + 2) % 4;
+						move();
+						direction = (direction + 2) % 4;
+						map[pointer_x][pointer_y] = null_char;
+						grid[pointer_x][pointer_y].val(null_char);
 						break;
 						
 					default:
