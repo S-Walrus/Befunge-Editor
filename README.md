@@ -1,3 +1,3 @@
 # Befunge Editor
 
-Coming soon...
+![Screenshot](https://github.com/S-Walrus/Befunge-Editor/blob/master/Befunge.png)
