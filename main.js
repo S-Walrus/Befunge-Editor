@@ -23,6 +23,12 @@ for (i = 0; i < len_x; i++) {
 }
 
 
+key.filter = function(event) {
+  var tagName = (event.target || event.srcElement).tagName;
+  return !(tagName == 'SELECT' || tagName == 'TEXTAREA');
+}
+
+
 function changeDirection(new_dir) {
 	direction = new_dir;
 }
@@ -80,7 +86,7 @@ function move(val) {
 
 function stop() {
 	clearInterval(timerId);
-	isRinning = false;
+	isRunning = false;
 }
 
 
@@ -103,6 +109,7 @@ function run() {
 
 
 $(document).ready(function() {
+	// Initialize the grid
 	for (x = 1; x < len_x + 1; x++)
 		for (y = 1; y < len_y + 1; y++) {
 			$("#bef-box").append('<input class="cell"' +
@@ -141,48 +148,75 @@ $(document).ready(function() {
 
 				move(val);
 			});
-
-			// Key pressed
-			grid[x-1][y-1].on("keydown", function(event) {
-				prevent = true;
-				switch (event.which) {
-					case 38:
-						changeDirection(0);
-						break;
-					case 39:
-						changeDirection(1);
-						break;
-					case 40:
-						changeDirection(2);
-						break;
-					case 37:
-						changeDirection(3);
-						break;
-					
-					case 13:
-						if (isRunning) {
-							stop();
-						} else {
-							run();
-						}
-						break;
-						
-					case 8:
-						direction = (direction + 2) % 4;
-						move();
-						direction = (direction + 2) % 4;
-						map[pointer_x][pointer_y] = null_char;
-						grid[pointer_x][pointer_y].val(null_char);
-						break;
-						
-					default:
-						prevent = false;
-				}
-				if (prevent) {
-					event.preventDefault();
-				}
-			})
 		}
+	
+	// Move
+	key('ctrl+up', function() {
+		temp = direction;
+		direction = 0;
+		move();
+		direction = temp;
+		return false;
+	});
+	key('ctrl+right', function() {
+		temp = direction;
+		direction = 1;
+		move();
+		direction = temp;
+		return false;
+	});
+	key('ctrl+down', function() {
+		temp = direction;
+		direction = 2;
+		move();
+		direction = temp;
+		return false;
+	});
+	key('ctrl+left', function() {
+		temp = direction;
+		direction = 3;
+		move();
+		direction = temp;
+		return false;
+	});
+	
+	// Change direction
+	key('up', function() {
+		changeDirection(0);
+		return false;
+	});
+	key('right', function() {
+		changeDirection(1);
+		return false;
+	});
+	key('down', function() {
+		changeDirection(2);
+		return false;
+	});
+	key('left', function() {
+		changeDirection(3);
+		return false;
+	});
+	
+	// Run
+	key('ctrl+r, enter', function() {
+		if (isRunning) {
+			stop();
+		} else {
+			run();
+		}
+		return false;
+	});
+	
+	// Backspace
+	key('backspace', function() {
+		direction = (direction + 2) % 4;
+		move();
+		direction = (direction + 2) % 4;
+		map[pointer_x][pointer_y] = null_char;
+		grid[pointer_x][pointer_y].val(null_char);
+		return false;
+	});
 });
 
 // #333A42, #485058, #A6A5A1, #F1ECE9, #D7443F
