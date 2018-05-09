@@ -150,51 +150,51 @@ $(document).ready(function() {
 			});
 		}
 	
-	// Move
+	// Change direction
 	key('ctrl+up', function() {
+		changeDirection(0);
+		return false;
+	});
+	key('ctrl+right', function() {
+		changeDirection(1);
+		return false;
+	});
+	key('ctrl+down', function() {
+		changeDirection(2);
+		return false;
+	});
+	key('ctrl+left', function() {
+		changeDirection(3);
+		return false;
+	});
+	
+	// Move
+	key('up', function() {
 		temp = direction;
 		direction = 0;
 		move();
 		direction = temp;
 		return false;
 	});
-	key('ctrl+right', function() {
+	key('right', function() {
 		temp = direction;
 		direction = 1;
 		move();
 		direction = temp;
 		return false;
 	});
-	key('ctrl+down', function() {
+	key('down', function() {
 		temp = direction;
 		direction = 2;
 		move();
 		direction = temp;
 		return false;
 	});
-	key('ctrl+left', function() {
+	key('left', function() {
 		temp = direction;
 		direction = 3;
 		move();
 		direction = temp;
-		return false;
-	});
-	
-	// Change direction
-	key('up', function() {
-		changeDirection(0);
-		return false;
-	});
-	key('right', function() {
-		changeDirection(1);
-		return false;
-	});
-	key('down', function() {
-		changeDirection(2);
-		return false;
-	});
-	key('left', function() {
-		changeDirection(3);
 		return false;
 	});
 	
