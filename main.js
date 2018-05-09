@@ -1,14 +1,12 @@
 const len_x = 40;
 const len_y = 20;
 const interval = 100;
-const null_char = '';
-// Number of quarters from top clockwise
-var direction = 0;
+const null_char = ' ';
+var direction = 0;							// Number of quarters from top clockwise
 var pointer_x = 0;
 var pointer_y = 0;
 var timerId;
 var isRunning = false;
-var stack = [];
 
 var grid = new Array(len_x);		// An array of elements contained in the grid
 var map = new Array(len_x);			// An array of value of elements, also the Befunge code
@@ -18,39 +16,42 @@ for (i = 0; i < len_x; i++) {
 	map[i] = new Array(len_y);
 	// Fill 'map' with null characters
 	for (j = 0; j < len_y; j++) {
-		map[j] = null_char;
+		map[i][j] = null_char;
 	}
 }
 
 
-key.filter = function(event) {
-  var tagName = (event.target || event.srcElement).tagName;
-  return !(tagName == 'SELECT' || tagName == 'TEXTAREA');
+// Changes direction of the pointer (it have to change the indicator state also)
+function changeDirection(val) {
+	if (typeof(val) == "string") {
+		switch (val) {
+			case '^':
+				direction = 0;
+				break;
+			case '>':
+				direction = 1;
+				break;
+			case 'v':
+				direction = 2;
+				break;
+			case '<':
+				direction = 3;
+				break;
+		}
+	} else if (typeof(val) == "number") {
+		direction = val % 4;
+	}
 }
 
 
-function changeDirection(new_dir) {
-	direction = new_dir;
-}
+// Moves the pointer
+function move(dir) {
 
-
-function move(val) {
-	switch (val) {
-		case '^':
-			changeDirection(0);
-			break;
-		case '>':
-			changeDirection(1);
-			break;
-		case 'v':
-			changeDirection(2);
-			break;
-		case '<':
-			changeDirection(3);
-			break;
+	if (dir == null) {
+		dir = direction;
 	}
 
-	switch (direction) {
+	switch (dir) {
 		case 0:
 			if (pointer_y != 0) {
 				pointer_y--;
@@ -84,30 +85,21 @@ function move(val) {
 }
 
 
+// Stops running the pogram
 function stop() {
 	clearInterval(timerId);
 	isRunning = false;
 }
 
 
-function runNext() {
-	switch (map[pointer_x][pointer_y]) {
-		case '@':
-			stop();
-			break;
-		default:
-			move(map[pointer_x][pointer_y]);
-			break;
-	}
-}
-
-
+// Runs the program
 function run() {
 	isRunning = true;
-	timerId = setInterval(function() { runNext() }, interval);
+	timerId = setInterval(function() { bef_do(map[pointer_x][pointer_y]) }, interval);
 }
 
 
+// The main function
 $(document).ready(function() {
 	// Initialize the grid
 	for (x = 1; x < len_x + 1; x++)
@@ -122,7 +114,7 @@ $(document).ready(function() {
 														'"/>');
 			grid[x-1][y-1] = $('#' + (x-1) + '-' + (y-1));
 
-			// Click
+			// On click
 			grid[x-1][y-1].on("click", function() {
 				// Move cursor to the end of the input
 				val = $(this).val()
@@ -134,7 +126,7 @@ $(document).ready(function() {
 				pointer_y = Number(temp[1]);
 			});
 
-			// Edit
+			// On edit
 			grid[x-1][y-1].on("input", function() {
 				// Cut chars except for the last one
 				$(this).val($(this).val().slice(-1));
@@ -146,77 +138,10 @@ $(document).ready(function() {
 					map[pointer_x][pointer_y] = val;
 				}
 
-				move(val);
+				changeDirection(val);
+				move();
 			});
 		}
-	
-	// Change direction
-	key('ctrl+up', function() {
-		changeDirection(0);
-		return false;
-	});
-	key('ctrl+right', function() {
-		changeDirection(1);
-		return false;
-	});
-	key('ctrl+down', function() {
-		changeDirection(2);
-		return false;
-	});
-	key('ctrl+left', function() {
-		changeDirection(3);
-		return false;
-	});
-	
-	// Move
-	key('up', function() {
-		temp = direction;
-		direction = 0;
-		move();
-		direction = temp;
-		return false;
-	});
-	key('right', function() {
-		temp = direction;
-		direction = 1;
-		move();
-		direction = temp;
-		return false;
-	});
-	key('down', function() {
-		temp = direction;
-		direction = 2;
-		move();
-		direction = temp;
-		return false;
-	});
-	key('left', function() {
-		temp = direction;
-		direction = 3;
-		move();
-		direction = temp;
-		return false;
-	});
-	
-	// Run
-	key('ctrl+r, enter', function() {
-		if (isRunning) {
-			stop();
-		} else {
-			run();
-		}
-		return false;
-	});
-	
-	// Backspace
-	key('backspace', function() {
-		direction = (direction + 2) % 4;
-		move();
-		direction = (direction + 2) % 4;
-		map[pointer_x][pointer_y] = null_char;
-		grid[pointer_x][pointer_y].val(null_char);
-		return false;
-	});
 });
 
 // #333A42, #485058, #A6A5A1, #F1ECE9, #D7443F
