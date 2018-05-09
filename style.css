@@ -12,7 +12,6 @@ input.cell {
   background-color: #485058;
   text-align: center;
   color: #F1ECE9;
-  box-shadow: inset inherit inherit 0 0 white;
 }
 
 input.cell:focus {
@@ -27,4 +26,33 @@ input.cell:focus {
   grid-gap: 4px;
   justify-items: center;
   align-items: center;
+}
+
+#stack-box {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.stack-cell {
+  background-color: #D7443F;
+  height: 80px;
+  width: 80px;
+  border-radius: 5px;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+h1 {
+  margin-top: 24px;
+  font-family: 'Ubuntu Mono', monospace;
+  color: #F1ECE9;
 }
