@@ -1,6 +1,6 @@
 const len_x = 40;
 const len_y = 20;
-const interval = 100;
+const interval = 200;
 const null_char = ' ';
 var direction = 0;							// Number of quarters from top clockwise
 var pointer_x = 0;

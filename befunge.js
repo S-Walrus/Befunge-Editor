@@ -4,6 +4,13 @@
 
 var stack = [];
 
+function updateStack() {
+	$("#stack-box").html("");
+	stack.forEach(function(item) {
+		$("#stack-box").append('<div class="stack-cell"><h1>' + item + '</h1></div>');
+	});
+}
+
 function bef_do(com) {
   switch (com) {
 			
@@ -28,16 +35,17 @@ function bef_do(com) {
 			stack.push(stack.pop() + stack.pop());
 			break;
 		case '-':
-			stack.push(stack.pop() - stack.pop());
+			stack.push(-(stack.pop() - stack.pop()));
 			break;
 		case '*':
 			stack.push(stack.pop() * stack.pop());
 			break;
 		case '/':
-			stack.push(stack.pop() / stack.pop());
+			stack.push(1 / stack.pop() * stack.pop());
 			break;
 		case '%':
-			stack.push(stack.pop() % stack.pop());
+			a = stack.pop();
+			stack.push(stack.pop() % a);
 			break;
 			
 		case '!':
@@ -77,6 +85,7 @@ function bef_do(com) {
 			}
 			break;
   }
+	updateStack();
 	changeDirection(com);
 	move();
 }
