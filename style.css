@@ -56,3 +56,13 @@ h1 {
   font-family: 'Ubuntu Mono', monospace;
   color: #F1ECE9;
 }
+
+#terminal {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  --background: #1d2226;
+  --size: 1.2;
+  height: 25%;
+}

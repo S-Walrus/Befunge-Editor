@@ -2,6 +2,7 @@
   Befunge.js - an interpreter of sigle commands
 */
 
+var input = '';
 var stack = [];
 var string_mode = false;
 
@@ -17,11 +18,11 @@ function bef_do(com) {
 		stack.push(com.charCodeAt(0));
 	} else {
 		switch (com) {
-				
+
 			case '@':
 				stop();
 				return 0;
-				
+
 			case '0':
 			case '1':
 			case '2':
@@ -34,7 +35,7 @@ function bef_do(com) {
 			case '9':
 				stack.push(parseInt(com));
 				break;
-				
+
 			case '+':
 				stack.push(stack.pop() + stack.pop());
 				break;
@@ -51,7 +52,7 @@ function bef_do(com) {
 				a = stack.pop();
 				stack.push(stack.pop() % a);
 				break;
-				
+
 			case '!':
 				if (stack.pop() == 0) {
 					stack.push(1);
@@ -80,7 +81,7 @@ function bef_do(com) {
 					changeDirection('<');
 				}
 				break;
-				
+
 			case '|':
 				if (stack.pop() == 0) {
 					changeDirection('v');
@@ -88,38 +89,38 @@ function bef_do(com) {
 					changeDirection('^');
 				}
 				break;
-				
+
 			case '"':
 				string_mode = !string_mode;
 				break;
-			
+
 			case ':':
 				a = stack.pop();
 				stack.push(a, a);
 				break;
-				
+
 			case '\\':
 				a = stack.pop();
 				b = stack.pop();
 				stack.push(a, b);
 				break;
-				
+
 			case '$':
 				stack.pop();
 				break;
-				
+
 			case '#':
 				move();
 				break;
-				
+
 			case 'p':
-				val = stack.pop();
+				v = stack.pop();
 				y = stack.pop();
 				x = stack.pop();
-				map[x][y] = val.toString().charCodeAt(0);
-				grid[x][y].val(String.fromCharCode(val));
+				map[x][y] = v.toString().charCodeAt(0);
+				grid[x][y].val(String.fromCharCode(v));
 				break;
-				
+
 			case 'g':
 				y = stack.pop();
 				x = stack.pop();

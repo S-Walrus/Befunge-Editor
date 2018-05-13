@@ -101,6 +101,13 @@ function run() {
 
 // The main function
 $(document).ready(function() {
+	
+	$('#terminal').terminal(function(command) {
+		input += command;
+		this.echo(input);
+		this.echo(input);
+	});
+	
 	// Initialize the grid
 	for (x = 1; x < len_x + 1; x++)
 		for (y = 1; y < len_y + 1; y++) {
