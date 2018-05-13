@@ -124,6 +124,7 @@ $(document).ready(function() {
 														'grid-row-end: ' + y + ';' +
 														'"/>');
 			grid[x-1][y-1] = $('#' + (x-1) + '-' + (y-1));
+			grid[x-1][y-1].val(null_char);
 
 			// On click
 			grid[x-1][y-1].on("click", function() {

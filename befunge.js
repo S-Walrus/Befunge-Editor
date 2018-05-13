@@ -117,13 +117,13 @@ function bef_do(com) {
 				v = stack.pop();
 				y = stack.pop();
 				x = stack.pop();
-				map[x][y] = v.toString().charCodeAt(0);
+				map[x][y] = String.fromCharCode(v);
 				grid[x][y].val(String.fromCharCode(v));
 				break;
 
 			case 'g':
-				y = stack.pop();
-				x = stack.pop();
+				var y = stack.pop();
+				var x = stack.pop();
 				stack.push(map[x][y].charCodeAt(0));
 				break;
 				
