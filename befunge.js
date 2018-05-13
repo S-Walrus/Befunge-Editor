@@ -126,6 +126,10 @@ function bef_do(com) {
 				x = stack.pop();
 				stack.push(map[x][y].charCodeAt(0));
 				break;
+				
+			case '.':
+				terminal.echo('[[b;green;]' + stack.pop() + ']');
+				break;
 		}
 	}
 	updateStack();

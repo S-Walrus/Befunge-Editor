@@ -7,6 +7,7 @@ var pointer_x = 0;
 var pointer_y = 0;
 var timerId;
 var isRunning = false;
+var terminal;
 
 var grid = new Array(len_x);		// An array of elements contained in the grid
 var map = new Array(len_x);			// An array of value of elements, also the Befunge code
@@ -102,10 +103,13 @@ function run() {
 // The main function
 $(document).ready(function() {
 	
-	$('#terminal').terminal(function(command) {
+	terminal = $('#terminal').terminal(function(command, term) {
 		input += command;
-		this.echo(input);
-		this.echo(input);
+		prompt = term.get_prompt();
+		term.set_prompt(command);
+		term.echo(prompt);
+	}, {
+		greetings: "JQuery Terminal:\nCopyright (c) 2011-2018 Jakub Jankiewicz <http://jcubic.pl/me>"
 	});
 	
 	// Initialize the grid
