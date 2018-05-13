@@ -128,8 +128,21 @@ function bef_do(com) {
 				break;
 				
 			case '.':
+				new_line();
 				terminal.echo('[[b;green;]' + stack.pop() + ']');
 				break;
+				
+			case ',':
+				print_inline(String.fromCharCode(stack.pop()));
+				break;
+				
+			case '&':
+				var t = setInterval(function() {
+					if (input != '') {
+						clearInterval(t);
+						stack.push(input[0]);
+					}
+				});
 		}
 	}
 	updateStack();

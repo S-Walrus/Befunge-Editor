@@ -6,8 +6,10 @@ var direction = 0;							// Number of quarters from top clockwise
 var pointer_x = 0;
 var pointer_y = 0;
 var timerId;
-var isRunning = false;
+var isRunning = false;					// If the program is running
 var terminal;
+var def_prompt;									// Default terminal prompt
+var prompt = '';								// Current terminal prompt (used to output strings)
 
 var grid = new Array(len_x);		// An array of elements contained in the grid
 var map = new Array(len_x);			// An array of value of elements, also the Befunge code
@@ -100,17 +102,34 @@ function run() {
 }
 
 
+// Outputs 'str' to the terminal without entering a new line
+function print_inline(str) {
+	prompt += str;
+	terminal.set_prompt(prompt);
+}
+
+
+// Creates a new line in the terminal and sets the default prompt
+function new_line() {
+	terminal.set_prompt(def_prompt);
+	if (prompt != '') {
+		terminal.echo(prompt);
+		prompt = '';
+	}
+}
+
+
 // The main function
 $(document).ready(function() {
-	
+	// Init the terminal
 	terminal = $('#terminal').terminal(function(command, term) {
 		input += command;
-		prompt = term.get_prompt();
-		term.set_prompt(command);
-		term.echo(prompt);
 	}, {
 		greetings: "JQuery Terminal:\nCopyright (c) 2011-2018 Jakub Jankiewicz <http://jcubic.pl/me>"
 	});
+	
+	// Set the default prompt
+	def_prompt = terminal.get_prompt();
 	
 	// Initialize the grid
 	for (x = 1; x < len_x + 1; x++)
