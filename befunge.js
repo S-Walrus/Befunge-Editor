@@ -137,18 +137,28 @@ function bef_do(com) {
 				print_inline(String.fromCharCode(stack.pop()));
 				break;
 				
-			case '&':
-				if (!wait) {
+			case '~':
+				if (input == '') {
 					new_line();
 					terminal.focus();
-				}
-				if (input == '') {
 					wait = true;
 				} else {
 					wait = false;
 					stack.push(input.charCodeAt(0));
 					input = input.substring(1);
-					grid[pointer_x][pointer_y].focus();
+					terminal.focus(false);
+				}
+				break;
+				
+			case '&':
+				if (input == '') {
+					new_line();
+					terminal.focus();
+					wait = true;
+				} else {
+					wait = false;
+					stack.push(parseInt(input));
+					input = '';
 					terminal.focus(false);
 				}
 				break;
