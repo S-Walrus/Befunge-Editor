@@ -1,5 +1,5 @@
-const len_x = 40;
-const len_y = 20;
+var len_x = 40;
+var len_y = 20;
 const interval = 200;
 const null_char = ' ';
 var direction = 0;							// Number of quarters from top clockwise
@@ -10,6 +10,13 @@ var isRunning = false;					// If the program is running
 var terminal;
 var def_prompt;									// Default terminal prompt
 var prompt = '';								// Current terminal prompt (used to output strings)
+
+// Get len_x, len_y from parameters
+var parameters = location.search.substring(1).split("&");
+if (parameters.length > 1) {
+	len_x = parseInt(parameters[0].split('=')[1]);
+	len_y = parseInt(parameters[1].split('=')[1]);
+}
 
 var grid = new Array(len_x);		// An array of elements contained in the grid
 var map = new Array(len_x);			// An array of value of elements, also the Befunge code
