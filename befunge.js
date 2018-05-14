@@ -5,6 +5,7 @@
 var input = '';
 var stack = [];
 var string_mode = false;
+var wait = false;
 
 function updateStack() {
 	$("#stack-box").html("");
@@ -137,15 +138,25 @@ function bef_do(com) {
 				break;
 				
 			case '&':
-				var t = setInterval(function() {
-					if (input != '') {
-						clearInterval(t);
-						stack.push(input[0]);
-					}
-				});
+				if (!wait) {
+					new_line();
+					terminal.focus();
+				}
+				if (input == '') {
+					wait = true;
+				} else {
+					wait = false;
+					stack.push(input.charCodeAt(0));
+					input = input.substring(1);
+					grid[pointer_x][pointer_y].focus();
+					terminal.focus(false);
+				}
+				break;
 		}
 	}
 	updateStack();
-	changeDirection(com);
-	move();
+	if (!wait) {
+		changeDirection(com);
+		move();
+	}
 }
