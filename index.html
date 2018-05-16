@@ -3,11 +3,12 @@
   <!-- Title -->
   <title>Befunge</title>
 
-  <!-- Frameworks -->
+  <!-- Frameworks (also libraries, resources, etc.) -->
   <script src="src/jquery-3.3.1.min.js"></script>
   <script src="src/jquery.terminal-1.14.0.min.js"></script>
   <script src="src/keymaster.js"></script>
   <link href="src/jquery.terminal-1.14.0.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://use.fontawesome.com/cc5ac64e3f.css">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
@@ -22,6 +23,12 @@
 
 
 <body>
+  <div id="top-bar">
+    <div class="top-bar-button"><i class="fa fa-file"></i></div>
+    <div class="top-bar-button"><i class="fa fa-play"></i></div>
+    <div class="top-bar-button"><i class="fa fa-pause"></i></div>
+    <div class="top-bar-button"><i class="fa fa-stop"></i></div>
+  </div>
   <div class="container" id="bef-box"></div>
   <div id="stack-box"></div>
   <div id="terminal"><div>

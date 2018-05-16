@@ -1,7 +1,6 @@
 body {
   margin: 0;
   background-color: #333A42;
-  padding: 10px;
 }
 
 input.cell {
@@ -26,6 +25,7 @@ input.cell:focus {
   grid-gap: 4px;
   justify-items: center;
   align-items: center;
+  margin: 20px;
 }
 
 #stack-box {
@@ -65,4 +65,29 @@ h1 {
   --background: #1d2226;
   --size: 1.2;
   height: 25%;
+}
+
+#top-bar {
+  height: 20px;
+  background-color: #1d2226;
+  margin: 0;
+  padding: 4px;
+}
+
+.top-bar-button {
+  display: inline;
+  color: #F1ECE9;
+  text-align: center;
+  border: 1px solid #1d2226;
+  border-radius: 4px;
+  margin: 0px;
+}
+
+.top-bar-button:hover {
+  border-color: #485058;
+}
+
+.fa {
+  height: 20px;
+  width: 20px;
 }
