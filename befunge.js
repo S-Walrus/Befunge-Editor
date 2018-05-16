@@ -7,7 +7,7 @@ var stack = [];
 var string_mode = false;
 var wait = false;
 
-function updateStack() {
+function update_stack() {
 	$("#stack-box").html("");
 	stack.forEach(function(item) {
 		$("#stack-box").append('<div class="stack-cell"><h1>' + item + '</h1></div>');
@@ -21,7 +21,7 @@ function bef_do(com) {
 		switch (com) {
 
 			case '@':
-				stop();
+				pause();
 				return 0;
 
 			case '0':
@@ -164,7 +164,7 @@ function bef_do(com) {
 				break;
 		}
 	}
-	updateStack();
+	update_stack();
 	if (!wait) {
 		changeDirection(com);
 		move();

@@ -2,14 +2,16 @@ var len_x = 40;
 var len_y = 20;
 const interval = 200;
 const null_char = ' ';
-var direction = 0;							// Number of quarters from top clockwise
+var direction = 1;							// Number of quarters from top clockwise
 var pointer_x = 0;
 var pointer_y = 0;
 var timerId;
-var isRunning = false;					// If the program is running
+var isRunning = false;					// If the program is running (timer is set)
+var started = false;						// If the program is started and it hasn't been stopped
 var terminal;
 var def_prompt;									// Default terminal prompt
 var prompt = '';								// Current terminal prompt (used to output strings)
+var map_save;
 
 // Get len_x, len_y from parameters
 var parameters = location.search.substring(1).split("&");
@@ -30,6 +32,16 @@ for (i = 0; i < len_x; i++) {
 	}
 }
 
+map_save = map.slice();
+
+
+// Make values in the grid the same as values in the map
+function sync_grid() {
+	for (x = 0; x < len_x; x++)
+		for (y = 0; y < len_y; y++) {
+			grid[x][y].val(map[x][y]);
+		}
+}
 
 // Changes direction of the pointer (it have to change the indicator state also)
 function changeDirection(val) {
@@ -95,16 +107,39 @@ function move(dir) {
 }
 
 
-// Stops running the pogram
-function stop() {
+// Pause the program
+function pause() {
 	clearInterval(timerId);
 	isRunning = false;
 }
 
 
+// Clears temporary edits in the editor
+function clear() {
+	// TODO рекурсивно slice'ить map
+	map = map_save.slice();
+	sync_grid();
+	
+	pointer_x = 0;
+	pointer_y = 0;
+	grid[pointer_x][pointer_y].focus();
+	
+	started = false;
+	
+	direction = 1;
+	
+	stack = [];
+	update_stack();
+}
+
+
 // Runs the program
 function run() {
+	if (!started) {
+		map_save = map.slice();
+	}
 	isRunning = true;
+	started = true;
 	timerId = setInterval(function() { bef_do(map[pointer_x][pointer_y]) }, interval);
 }
 

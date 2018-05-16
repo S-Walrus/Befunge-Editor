@@ -56,7 +56,8 @@ key('left', function() {
 // Run
 key('ctrl+r, enter', function() {
   if (isRunning) {
-    stop();
+		clear();
+    pause();
   } else {
     run();
   }
