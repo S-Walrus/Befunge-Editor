@@ -32,8 +32,15 @@ for (i = 0; i < len_x; i++) {
 	}
 }
 
-map_save = map.slice();
 
+// Deep copy of a 2-dimentional array
+function deep_copy(arr) {
+	var res = Array(arr.length);
+	for (var i = 0; i < arr.length; i++) {
+		res[i] = arr[i].slice();
+	}
+	return res;
+}
 
 // Make values in the grid the same as values in the map
 function sync_grid() {
@@ -64,7 +71,6 @@ function changeDirection(val) {
 		direction = val % 4;
 	}
 }
-
 
 // Moves the pointer
 function move(dir) {
@@ -116,8 +122,7 @@ function pause() {
 
 // Clears temporary edits in the editor
 function clear() {
-	// TODO рекурсивно slice'ить map
-	map = map_save.slice();
+	map = deep_copy(map_save);
 	sync_grid();
 	
 	pointer_x = 0;
@@ -136,7 +141,7 @@ function clear() {
 // Runs the program
 function run() {
 	if (!started) {
-		map_save = map.slice();
+		map_save = deep_copy(map);
 	}
 	isRunning = true;
 	started = true;
@@ -163,6 +168,10 @@ function new_line() {
 
 // The main function
 $(document).ready(function() {
+	
+	// Init the map save (as a precaution)
+	map_save = deep_copy(map);
+	
 	// Init the terminal
 	terminal = $('#terminal').terminal(function(command, term) {
 		input += command;
