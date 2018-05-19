@@ -56,8 +56,8 @@ key('left', function() {
 // Run
 key('ctrl+r, enter', function() {
   if (isRunning) {
-		clear();
     pause();
+		clear();
   } else {
     run();
   }
@@ -72,4 +72,27 @@ key('backspace', function() {
   map[pointer_x][pointer_y] = null_char;
   grid[pointer_x][pointer_y].val(null_char);
   return false;
+});
+
+
+$(document).ready(function() {
+	
+	$('#run').on('click', function() {
+		run();
+	});
+	
+	$('#pause').on('click', function() {
+		pause();
+	});
+	
+	$('#stop').on('click', function() {
+		pause();
+		clear();
+	});
+	
+	$('#save').on('click', function() {
+		// TODO записывать код Befunge в файл
+		var file = new Blob(['test'], {type: 'text/plain'});
+		$('#save').attr('href', URL.createObjectURL(file));
+	});
 });

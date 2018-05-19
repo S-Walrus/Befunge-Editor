@@ -87,6 +87,11 @@ h1 {
   border-color: #485058;
 }
 
+.top-bar-button:active {
+  background-color: #060708;
+  color: #e0d5ce;
+}
+
 .fa {
   height: 20px;
   width: 20px;
