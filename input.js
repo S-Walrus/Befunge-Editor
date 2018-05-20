@@ -91,8 +91,14 @@ $(document).ready(function() {
 	});
 	
 	$('#save').on('click', function() {
-		// TODO записывать код Befunge в файл
-		var file = new Blob(['test'], {type: 'text/plain'});
+		var code = "";
+		for (var y = 0; y < len_y; y++) {
+			for (var x = 0; x < len_x; x++) {
+				code = code + map[x][y];
+			}
+			code = code + '\n';
+		}
+		var file = new Blob([code], {type: 'text/plain'});
 		$('#save').attr('href', URL.createObjectURL(file));
 	});
 });
