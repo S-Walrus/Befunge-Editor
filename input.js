@@ -101,4 +101,16 @@ $(document).ready(function() {
 		var file = new Blob([code], {type: 'text/plain'});
 		$('#save').attr('href', URL.createObjectURL(file));
 	});
+
+  $('#open').on('click', function() {
+    if ($('#input-file').length > 0) {
+      $('#input-file').remove();
+    } else {
+      $('#top-bar').append('<input id="input-file" type=file style="position: absolute" accept=".bf" onchange="handleFile(this.files[0])" />');
+    }
+  });
+
+  function handleFiles(file) {
+    // TODO
+  }
 });
