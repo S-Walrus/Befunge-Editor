@@ -2,12 +2,12 @@ var len_x = 40;
 var len_y = 20;
 const interval = 200;
 const null_char = ' ';
-var direction = 1;							// Number of quarters from top clockwise
+var direction = 1;								// Number of quarters from top clockwise
 var pointer_x = 0;
 var pointer_y = 0;
 var timerId;
-var isRunning = false;					// If the program is running (timer is set)
-var started = false;						// If the program is started and it hasn't been stopped
+var isRunning = false;							// If the program is running (timer is set)
+var started = false;							// If the program is started and it hasn't been stopped
 var terminal;
 var def_prompt;									// Default terminal prompt
 var prompt = '';								// Current terminal prompt (used to output strings)
@@ -48,6 +48,20 @@ function sync_grid() {
 		for (y = 0; y < len_y; y++) {
 			grid[x][y].val(map[x][y]);
 		}
+}
+
+// Resets all temporary parameters and sets the new map (if it is passed)
+function reset(newMap) {
+	direction = 1;
+	pointer_x = 0;
+	pointer_y = 0;
+	clearInterval(timerId);
+	isRunning = false;
+	started = false;
+	prompt = '';
+	map = deep_copy(newMap);
+	map_save = deep_copy(map);
+	sync_grid();
 }
 
 // Changes direction of the pointer (it have to change the indicator state also)

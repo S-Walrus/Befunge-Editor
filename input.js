@@ -1,7 +1,20 @@
+var reader = new FileReader();
+
+
 // To handle input even when <input> is focused
 key.filter = function(event) {
   var tagName = (event.target || event.srcElement).tagName;
   return !(tagName == 'SELECT' || tagName == 'TEXTAREA');
+}
+
+
+function handleFile(file) {
+  reader.readAsText(file);
+}
+
+reader.onload = function(event) {
+  reset(event.target.result);
+  $('#input-file').remove();
 }
 
 
@@ -109,8 +122,4 @@ $(document).ready(function() {
       $('#top-bar').append('<input id="input-file" type=file style="position: absolute" accept=".bf" onchange="handleFile(this.files[0])" />');
     }
   });
-
-  function handleFiles(file) {
-    // TODO
-  }
 });
